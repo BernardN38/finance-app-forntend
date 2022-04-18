@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  Routes,
+  Route,
+  BrowserRouter,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+import Main from "./containers/main/Main";
+import HomepageContainer from "./containers/homepage/HomepageContainer";
+import TransactionsContainer from "./containers/chart/TransactionsContainer";
+import DashboardContainer from "./containers/dashboard/DashboardContainer";
+import ProfileContainer from "./containers/user/ProfileContainer";
+import AuthContainer from "./containers/auth/AuthContianer";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* public pages */}
+        <Route path="/" element={<Main />}>
+          <Route index element={<HomepageContainer />} />
+          <Route path="/login" element={<AuthContainer type="login" />} />
+          <Route path="/register" element={<AuthContainer type="register" />} />
+
+          {/* private pages */}
+          <Route path="/" element={<PrivateOutlet />}>
+            <Route
+              path="/transactions/:type"
+              element={<TransactionsContainer />}
+            />
+            <Route
+              path="/transactions/dashboard"
+              element={<DashboardContainer />}
+            />
+            <Route path="/profile" element={<ProfileContainer />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default App;
+function PrivateOutlet() {
+  const auth = useSelector((state) => state.auth);
+  return auth.status ? <Outlet /> : <Navigate to="/login" />;
+}
+
+// function PrivateRoute({ children }) {
+//   const auth = useAuth();
+//   return auth ? children : <Navigate to="/login" />;
+// }
+
+function useAuth() {
+  const authMode = useSelector((state) => state.auth.authMode);
+  return true;
+}
