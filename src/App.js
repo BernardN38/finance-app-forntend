@@ -10,15 +10,16 @@ import Main from "./containers/main/Main";
 import HomepageContainer from "./containers/homepage/HomepageContainer";
 import TransactionsContainer from "./containers/chart/TransactionsContainer";
 import DashboardContainer from "./containers/dashboard/DashboardContainer";
-import ProfileContainer from "./containers/user/ProfileContainer";
+import ProfileContainer from "./containers/profile/ProfileContainer";
 import AuthContainer from "./containers/auth/AuthContianer";
-
+import LandingPage from "./containers/landing/LandingPage";
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/* public pages */}
         <Route path="/" element={<Main />}>
+        <Route index element={<LandingPage />} />
           <Route index element={<HomepageContainer />} />
           <Route path="/login" element={<AuthContainer type="login" />} />
           <Route path="/register" element={<AuthContainer type="register" />} />

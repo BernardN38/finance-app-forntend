@@ -1,4 +1,5 @@
-const serverUrl = 'http://localhost:8080'
+const serverUrl = 'https://test-finapp.herokuapp.com/'
+
 
 
 module.exports = serverUrl

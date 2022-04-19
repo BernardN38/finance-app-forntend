@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import serverUrl from "../../config";
 export default function Main() {
   const snackbar = useSelector((state) => state.snackbar);
-  const auth = useSelector((state) => state.auth)
-  const [user,setUser] = useState({});
+  const auth = useSelector((state) => state.auth);
+  const dispatch =  useDispatch();
+
   const checkIn = async () => {
-    console.log(auth)
+    console.log(auth);
     try {
       axios
-        .get(`${serverUrl}/api/v1/headers`, {
+        .get(`${serverUrl}/api/v1/token/checkin`, {
           withCredentials: true,
         })
         .then((res) => console.log(res.data))
@@ -26,14 +27,19 @@ export default function Main() {
 
   useEffect(() => {
     const getUserProfile = async () => {
-      const res = await axios.get(`${serverUrl}/api/v1/profile`, {
-        withCredentials: true,
-      });
-      setUser(res.data);
+      let res;
+      try {
+        res = await axios.get(`${serverUrl}/api/v1/profile`, {
+          withCredentials: true,
+        });
+        console.log(res.data)
+        dispatch({ type: "SET_AUTH_TRUE" });
+        dispatch({ type: "SET_USER_TOKEN", payload: {user_id:res.data.id, ...res.data} });
+      } catch (err) {
+        console.log(err.response.data);
+      }
     };
-    if (auth.status === true){
-      console.log("true")
-    } else {
+    if (auth.status != true) {
       getUserProfile();
     }
   }, []);
@@ -41,14 +47,14 @@ export default function Main() {
   return (
     <Box height="100vh">
       <Navbar />
-      <Outlet user={user} />
+      <Outlet />
       <SnackbarContainer
         open={snackbar.status}
         success={true}
         message={snackbar.message}
         severity={snackbar.severity}
       />
-      <button onClick={checkIn}> check in </button>
+      {/* <button onClick={checkIn}> check in </button> */}
     </Box>
   );
 }

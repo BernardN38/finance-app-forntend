@@ -34,6 +34,7 @@ const options = {
 };
 
 export default function TransactionsContainer() {
+  
   const [resData, setResData] = useState([]);
   const [chartData, setChartData] = useState(initData);
   const [listItemAmount, setListItemAmount] = useState(15);
@@ -52,6 +53,7 @@ export default function TransactionsContainer() {
         );
       } catch (err) {
         if (err.response.status === 401) {
+          console.log(err.response)
           navigate("/login");
           return;
         }

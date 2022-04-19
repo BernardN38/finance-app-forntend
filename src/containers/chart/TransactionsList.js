@@ -24,8 +24,7 @@ const types = {
 }
 
 export default function TransactionsList({
-  type = "withdrawal",
-  data,
+  data =[],
   listItemAmount,
   setListItemAmount,
 }) {

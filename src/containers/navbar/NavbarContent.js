@@ -19,9 +19,6 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import serverUrl from "../../config";
 
-
-
-
 const pages = ["Dashboard", "Spending", "Income", "Investments"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const searchType = {
@@ -35,9 +32,8 @@ export default function NavbarContent() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
-  const auth = useSelector((state => state.auth))
+  const auth = useSelector((state) => state.auth);
 
-  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };

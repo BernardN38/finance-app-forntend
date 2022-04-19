@@ -21,7 +21,7 @@ const theme = createTheme();
 
 
 
-export default function Login({open,setOpen}) {
+export default function Login() {
   const dispatch =  useDispatch();
   const navigate = useNavigate();
 
