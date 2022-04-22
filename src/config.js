@@ -1,4 +1,4 @@
-const serverUrl = 'https://test-finapp.herokuapp.com/'
+const serverUrl = 'https://test-finapp.herokuapp.com'
 
 
 
